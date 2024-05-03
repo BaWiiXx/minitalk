@@ -1,35 +1,53 @@
-NAME = minitalk
+NAME_SERVER = server
+NAME_CLIENT = client
 
-SRCS = client.c serveur.c
+SRC_SERVER = server.c
+SRC_CLIENT = client.c
 
-OBJS=$(SRCS:.c=.o)
+OBJ_SERVER=$(SRC_SERVER:.c=.o)
+OBJ_CLIENT=$(SRC_CLIENT:.c=.o)
+
 
 RM=rm -f
 
 CC= clang
 
-CFLAGS= -Wall -Wextra -Werror -I./ft_printf/printf.h
+CFLAGS= -Wall -Wextra -Werror -I./ft_printf/ft_printf.h\
+							-I/./libft/libft.h
 
-all: $(NAME)
+all: $(NAME_SERVER) $(NAME_CLIENT)
 
-$(NAME) : $(OBJS)
-	make --directory ./printf
-	$(CC) $(OBJS) $(CFLAGS) -o $@
+$(NAME_SERVER): $(OBJ_SERVER)
+	make --directory ./ft_printf
+	make --directory ./libft
+	$(CC) $(OBJ_SERVER) $(CFLAGS) -o $(NAME_SERVER) libft/libft.a
 	@if [ $$? -eq 0 ]; then \
-		echo "\033[32;1mCompilation successful!\033[0m"; \
+		echo "\033[32;1mCompilation of server successful!\033[0m"; \
+	fi
+
+$(NAME_CLIENT): $(OBJ_CLIENT)
+	make --directory ./ft_printf
+	make --directory ./libft
+	$(CC) $(OBJ_CLIENT) $(CFLAGS) -o $(NAME_CLIENT) libft/libft.a
+	@if [ $$? -eq 0 ]; then \
+		echo "\033[32;1mCompilation of client successful!\033[0m"; \
 	fi
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean: 
-	$(RM) $(OBJS)
+	$(RM) $(OBJ_SERVER) $(OBJ_CLIENT)
+	$(RM) libft/*.o
+	$(RM) libft/*.a
+
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME_SERVER) $(NAME_CLIENT)
 
-re: fclean $(NAME)
+re: fclean all
 
-run: all
-	./$(NAME)
+run: $(NAME)
+	./$(NAME_SERVER)
+	./$(NAME_CLIENT)
 
 .PHONY: all clean fclean re

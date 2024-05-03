@@ -6,70 +6,61 @@
 /*   By: bdany <bdany@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:42:24 by bdany             #+#    #+#             */
-/*   Updated: 2024/04/22 17:35:02 by bdany            ###   ########.fr       */
+/*   Updated: 2024/05/03 18:52:09 by bdany            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include <signal.h>
 
-long	ft_atoi(const char *str)
+int		g_perm;
+
+void	sign_recept(int sign)
 {
-	int				negatif;
-	int				i;
-	unsigned long	nb;
-
-	nb = 0;
-	negatif = 1;
-	i = 0;
-	while (str[i] == 32 || (str[i] >= 8 && str[i] <= 13))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			negatif = -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		nb = nb * 10 + (str[i] - '0');
-		i++;
-	}
-	return (nb * negatif);
+	(void)sign;
+	g_perm = 1;
 }
 
-void	atobits(int pid, char c)
+void	char_to_bit(int pid, char c)
 {
 	int	i;
 
-	i = 8;
-	while (i > 0)
+	i = 0;
+	while (i < 8)
 	{
-		if ((c & (1 << i)))
-			signal(SIGUSR1, pid);
+		g_perm = 0;
+		if (c & (1 << i))
+			kill(pid, SIGUSR1);
 		else
-			signal(SIGUSR2, pid);
-		usleep(100);
-		i--;
+			kill(pid, SIGUSR2);
+		i++;
+		while (g_perm != 1)
+			;
 	}
+}
+
+void	send_char(char *str, int pid)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		char_to_bit(pid, str[i]);
+		i++;
+	}
+	char_to_bit(pid, 0);
 }
 
 int	main(int argc, char **argv)
 {
-	int pid;
-	int i;
+	int	pid;
 
-	i = 0;
-	if (argc == 3)
-	{
-		pid = ft_atoi(argv[1]);
-		while (argv[2][i] != '\0')
-		{
-			atobits(pid, argv[2][i]);
-			i++;
-		}
-	}
-	else
-		return (write(2, "Error\n", 6));
+	if (argc != 3)
+		return (write(2, "Error.\n", 7));
+	pid = ft_atoi(argv[1]);
+	if (pid < 1)
+		return (write(2, "Wrong PID.\n", 11));
+	signal(SIGUSR1, sign_recept);
+	send_char(argv[2], pid);
 	return (0);
 }
