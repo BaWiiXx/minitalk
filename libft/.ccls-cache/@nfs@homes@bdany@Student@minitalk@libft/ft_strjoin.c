@@ -6,7 +6,7 @@
 /*   By: bdany <bdany@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 14:18:40 by bdany             #+#    #+#             */
-/*   Updated: 2024/05/06 11:36:35 by bdany            ###   ########.fr       */
+/*   Updated: 2024/05/03 17:41:11 by bdany            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,10 @@ char	*ft_strjoin(char const *s1, unsigned char *s2)
 	tab[i] = '\0';
 	return (tab);
 }
-
 char	*ft_strjoin_char_free(char *s1, unsigned char c)
 {
-	char	*tab;
-	int		i;
+	char *tab;
+	int i;
 
 	if (!s1)
 		return (NULL);

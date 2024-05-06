@@ -6,15 +6,22 @@
 /*   By: bdany <bdany@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:06:07 by bdany             #+#    #+#             */
-/*   Updated: 2023/11/17 16:29:48 by bdany            ###   ########.fr       */
+/*   Updated: 2024/05/06 11:06:37 by bdany            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isdigit(int c)
+int	ft_isdigit(char *str)
 {
-	if (c >= 48 && c <= 57)
-		return (1);
+	int	c;
+
+	c = 0;
+	while (str[c])
+	{
+		if (str[c] < 48 || str[c] > 57)
+			return (1);
+		c++;
+	}
 	return (0);
 }

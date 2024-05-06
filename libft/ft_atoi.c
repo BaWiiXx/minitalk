@@ -6,17 +6,27 @@
 /*   By: bdany <bdany@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:27:28 by bdany             #+#    #+#             */
-/*   Updated: 2023/11/20 15:54:14 by bdany            ###   ########.fr       */
+/*   Updated: 2024/05/06 11:17:52 by bdany            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+static int	is_overflow(int s, long m)
 {
-	int	i;
-	int	s;
-	int	m;
+	int	check;
+
+	check = 2;
+	if (m * s < -2147483648 || m * s > 2147483647)
+		check = 0;
+	return (check);
+}
+
+long	ft_atoi(const char *nptr)
+{
+	int		i;
+	int		s;
+	long	m;
 
 	i = 0;
 	s = 1;
@@ -32,7 +42,11 @@ int	ft_atoi(const char *nptr)
 	while ((nptr[i] >= '0' && nptr[i] <= '9'))
 	{
 		m = m * 10 + (nptr[i] - '0');
+		if (is_overflow(s, m) == 0)
+			return (0);
 		i++;
 	}
+	if ((size_t)i != ft_strlen(nptr))
+		return (0);
 	return (m * s);
 }

@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdany <bdany@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/02 13:34:03 by bdany             #+#    #+#             */
-/*   Updated: 2024/05/06 11:36:46 by bdany            ###   ########.fr       */
+/*   Created: 2024/05/06 11:38:58 by bdany             #+#    #+#             */
+/*   Updated: 2024/05/06 11:39:00 by bdany            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef MINITALK_BONUS_H
+# define MINITALK_BONUS_H
 
-char	ft_strcat(char *dest, unsigned char *src)
-{
-	size_t	dest_len;
-	size_t	i;
+# include "libft/libft.h"
+# include <signal.h>
+# include <stdio.h>
+# include <unistd.h>
 
-	i = 0;
-	if ((!dest || !src))
-		return (0);
-	dest_len = ft_strlen(dest);
-	while (src[i])
-	{
-		dest[i + dest_len] = src[i];
-		i++;
-	}
-	dest[i + dest_len] = '\0';
-	return (*dest);
-}
+#endif

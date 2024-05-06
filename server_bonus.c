@@ -6,11 +6,11 @@
 /*   By: bdany <bdany@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:50:45 by bdany             #+#    #+#             */
-/*   Updated: 2024/05/06 13:19:49 by bdany            ###   ########.fr       */
+/*   Updated: 2024/05/06 11:38:43 by bdany            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 void	print_bit(int sign, siginfo_t *info, void *context)
 {
